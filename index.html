@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой фотоальбом путешествий</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .album {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .photo-container {
+            position: relative;
+            padding-top: 75%; /* 4:3 Aspect Ratio */
+        }
+
+        .photo-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-info {
+            padding: 1.5rem;
+        }
+
+        .photo-title {
+            font-size: 1.25rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .photo-date {
+            font-size: 0.9rem;
+            color: #95a5a6;
+            margin-bottom: 0.5rem;
+        }
+
+        .photo-description {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background-color: #e0e7ff;
+            color: #3b82f6;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow: auto;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 80%;
+            margin-top: 4%;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: auto;
+        }
+
+        .close {
+            color: #fff;
+            font-size: 35px;
+            font-weight: bold;
+            position: absolute;
+            right: 35px;
+            top: 15px;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Мой фотоальбом путешествий</h1>
+        <p class="subtitle">Запечатленные моменты и незабываемые воспоминания</p>
+    </header>
+
+    <div class="album">
+        <div class="photo-grid">
+            <!-- Фотокарточка 1 -->
+            <div class="photo-card">
+                <div class="photo-container">
+                    <img src="/api/placeholder/400/300" alt="Горный пейзаж">
+                </div>
+                <div class="photo-info">
+                    <h2 class="photo-title">Горы Кавказа</h2>
+                    <p class="photo-date">15 июля 2023</p>
+                    <p class="photo-description">Захватывающий вид на горные вершины во время восхода солнца. Один из самых запоминающихся моментов путешествия.</p>
+                    <div class="tags">
+                        <span class="tag">Горы</span>
+                        <span class="tag">Природа</span>
+                        <span class="tag">Рассвет</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Фотокарточка 2 -->
+            <div class="photo-card">
+                <div class="photo-container">
+                    <img src="/api/placeholder/400/300" alt="Городской пейзаж">
+                </div>
+                <div class="photo-info">
+                    <h2 class="photo-title">Огни большого города</h2>
+                    <p class="photo-date">3 сентября 2023</p>
+                    <p class="photo-description">Ночная жизнь мегаполиса во всей красе. Небоскребы, словно маяки, освещают городское небо.</p>
+                    <div class="tags">
+                        <span class="tag">Город</span>
+                        <span class="tag">Ночь</span>
+                        <span class="tag">Архитектура</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Фотокарточка 3 -->
+            <div class="photo-card">
+                <div class="photo-container">
+                    <img src="/api/placeholder/400/300" alt="Морской пляж">
+                </div>
+                <div class="photo-info">
+                    <h2 class="photo-title">Тропический рай</h2>
+                    <p class="photo-date">22 августа 2023</p>
+                    <p class="photo-description">Белоснежный песок, кристально чистая вода и пальмы, качающиеся на легком бризе.</p>
+                    <div class="tags">
+                        <span class="tag">Море</span>
+                        <span class="tag">Пляж</span>
+                        <span class="tag">Отпуск</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Фотокарточки 4-6 -->
+            <div class="photo-card">
+                <div class="photo-container">
+                    <img src="/api/placeholder/400/300" alt="Старинная улочка">
+                </div>
+                <div class="photo-info">
+                    <h2 class="photo-title">Улицы старого города</h2>
+                    <p class="photo-date">5 октября 2023</p>
+                    <p class="photo-description">Атмосферные улочки европейского городка, где каждый камень дышит историей.</p>
+                    <div class="tags">
+                        <span class="tag">История</span>
+                        <span class="tag">Европа</span>
+                        <span class="tag">Путешествия</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-container">
+                    <img src="/api/placeholder/400/300" alt="Осенний парк">
+                </div>
+                <div class="photo-info">
+                    <h2 class="photo-title">Краски осени</h2>
+                    <p class="photo-date">12 октября 2023</p>
+                    <p class="photo-description">Золотая осень в городском парке. Невероятные цвета и умиротворяющая атмосфера.</p>
+                    <div class="tags">
+                        <span class="tag">Осень</span>
+                        <span class="tag">Парк</span>
+                        <span class="tag">Природа</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-container">
+                    <img src="/api/placeholder/400/300" alt="Фестиваль еды">
+                </div>
+                <div class="photo-info">
+                    <h2 class="photo-title">Гастрономический фестиваль</h2>
+                    <p class="photo-date">8 июля 2023</p>
+                    <p class="photo-description">Яркие краски и ароматы местной кухни на ежегодном фестивале еды.</p>
+                    <div class="tags">
+                        <span class="tag">Еда</span>
+                        <span class="tag">Фестиваль</span>
+                        <span class="tag">Культура</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для просмотра фотографий -->
+    <div id="photoModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img class="modal-img" src="" alt="Увеличенное фото">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Мой фотоальбом. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Получаем все элементы
+        const modal = document.getElementById("photoModal");
+        const modalImg = document.querySelector(".modal-img");
+        const closeBtn = document.querySelector(".close");
+        const photoCards = document.querySelectorAll(".photo-card");
+
+        // Открываем модальное окно при клике на фото
+        photoCards.forEach(card => {
+            card.addEventListener("click", function() {
+                const img = this.querySelector("img");
+                modal.style.display = "block";
+                modalImg.src = img.src;
+            });
+        });
+
+        // Закрываем модальное окно при клике на крестик
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Закрываем модальное окно при клике вне фото
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html> 
